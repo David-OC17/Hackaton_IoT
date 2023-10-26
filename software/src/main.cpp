@@ -1,18 +1,28 @@
 #include <Arduino.h>
+#include "../lib/motor_control.cpp"
+#include "../lib/sensor_readings.cpp"
 
-// put function declarations here:
-int myFunction(int, int);
+//////////////////// Pin configuration ////////////////////
+
+// Motor A
+int enA = 11;
+int in1 = 12;
+int in2 = 13;
+
+// Motor B
+int enB = 9;
+int in3 = 10;
+int in4 = 8;
+
+char option = '9';
+
+
+
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  // put your setup code here, to run once
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  // put your main code here, to run repeatedly
 }
