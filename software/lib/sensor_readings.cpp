@@ -17,6 +17,8 @@
 
 #include <Arduino.h>
 
+//////////////////// Light resistances ////////////////////
+
 struct lightSensors {
     int lightSensorPinRight;
     int lightSensorPinCenter;
@@ -75,4 +77,39 @@ int maxIntensityLight(lightSensors &sensors, lightReadings &readings, lightToler
     else {
         return 2; // Left has the highest intensity (or they are equal)
     }
+}
+
+//////////////////// Ultrasonic sensors ////////////////////
+struct ultrasonic{
+    long duration;
+    long distance; // Either in milimeters or inches
+    const int pin;
+
+    ultrasonic(long durationVal, long distanceVal, int pinVal)
+        : duration(durationVal), distance(distanceVal), pin(pinVal){
+    }
+};
+
+long microsecondsToInches(long microseconds) {
+  return microseconds / 74 / 2;
+}
+
+long microsecondsToMillimeters(long microseconds) {
+    return microseconds / 2.91;
+}
+
+// Turn the sensor on, get a reading, convert time into distance
+void readUltrasonic(ultrasonic &U_sensor){
+	pinMode(U_sensor.pin, OUTPUT);
+	digitalWrite(U_sensor.pin, LOW);
+	delayMicroseconds(2);
+
+	digitalWrite(U_sensor.pin, HIGH);
+	delayMicroseconds(5);
+	digitalWrite(U_sensor.pin, LOW);
+
+	pinMode(U_sensor.pin, INPUT);
+	U_sensor.duration = pulseIn(U_sensor.pin, HIGH, 1000000); // pin, mode, timeout
+
+	U_sensor.distance = microsecondsToMillimeters(U_sensor.duration);
 }

@@ -24,6 +24,7 @@ lightReadings L_readings(0, 0, 0);
 lightTolerances L_tolerances(1000, 1000, 1000); 
 
 ///////// Ultrasonic sensor configuration /////////
+ultrasonic U_sensor(0, 0, 5);
 
 
 void setup() {
@@ -48,18 +49,70 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly
+/*
+1. Check which of the light sensors is the highest
+  1.1 Rotate as needed so the front of the robot faces forward
 
-  /*
-  1. Check which of the light sensors is the highest
-    1.1 Rotate as needed so the front of the robot faces forward
-      
-  2. Check the path to the front
-    a. If it is clear, move until it is not
-    b. If not clear, check which of the two sides has most clearance
-      b.1 Rotate towards that side
-      b.2 Move towards that side, looking for an opening on the side
+2. Check the path to the front
+  A. If it is clear, move until it is not
+  B. If not clear, check which of the two sides has most clearance
+    B.1 Rotate towards that side
+    B.2 Move towards that side, looking for an opening on the side
+      B.2.b If opening is found, rotate forward and repeat from step 1
+      B.2.b If opening not found, rotate 180 degrees and look for new opening
+*/
 
+  int lightSensor = maxIntensityLight(lightSensorsObj, lightReadingsObj, lightTolerancesObj);
 
-  */
+  if (lightSensor == 0) {
+    // Right sensor has the highest intensity
+    // Rotate so the front of the robot faces forward
+    // Implement the rotation logic here
+  }
+  else if (lightSensor == 1) {
+    // Center sensor has the highest intensity
+    // Rotate so the front of the robot faces forward
+    // Implement the rotation logic here
+  }
+  else if (lightSensor == 2) {
+    // Left sensor has the highest intensity (or they are equal)
+    // Rotate so the front of the robot faces forward
+    // Implement the rotation logic here
+  }
+
+  // Now, you are facing forward. Check the path to the front.
+  int frontDistance = readUltrasonic(ultrasonicObj);
+
+  if (frontDistance > someThreshold) {
+      // Path is clear, move forward
+      moveForward(someSpeed, motorXObj, motorYObj);
+  }
+  else {
+    // Path is not clear, check which side has more clearance
+    int leftDistance = readUltrasonic(ultrasonicLeftObj);
+    int rightDistance = readUltrasonic(ultrasonicRightObj);
+
+    if (leftDistance > rightDistance) {
+      // Rotate towards the left side
+      // Implement the rotation logic here
+    }
+    else {
+      // Rotate towards the right side
+      // Implement the rotation logic here
+    }
+
+    // Move towards that side, looking for an opening
+    // Implement the move logic here
+
+    // If opening is found
+    if (openingFound) {
+      // Rotate forward and repeat from step 1
+      // Implement the rotation logic here
+    }
+    // If opening not found
+    else {
+      // Rotate 180 degrees
+      // Implement the rotation logic here
+    }
+  }
 }
