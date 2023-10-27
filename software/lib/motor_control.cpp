@@ -1,74 +1,89 @@
-/*
-Some of the code functions in the library where taken from from:
-https://github.com/ParzivalStark/TallerIRS by ParzivalStark
-and
-https://www.instructables.com/Arduino-Flashlight-Following-Robot/ by joesinstructables
-
-Due credit to them for their work.
-*/
+/**************************************************************************
+ * Libreria para control de motores
+ * Autor: David Ortiz Cota
+ * Fecha: 27/10/2023
+ * 
+ * Descripcion:
+ * Este archivo contiene funciones útiles para el control de los dos motores
+ * del robot. Se utiliza un struct para cada motor, y funciones para
+ * traslación y roatación sencilla del robot.
+ * 
+ * Credits:
+ * Some of the code functions in the library where taken from from:
+ * https://github.com/ParzivalStark/TallerIRS by ParzivalStark
+ * and
+ * https://www.instructables.com/Arduino-Flashlight-Following-Robot/ by joesinstructables
+ * Due credit to them for their work.
+ **************************************************************************/
 
 #include <Arduino.h>
 
-// Motor A
-int enA = 11;
-int in1 = 12;
-int in2 = 13;
+struct motor {
+    int en;
+    int in1;
+    int in2;
 
-// Motor B
-int enB = 9;
-int in3 = 10;
-int in4 = 8;
+    // Constructor for the motor struct
+    motor(int enValue, int in1Value, int in2Value) {
+        en = enValue;
+        in1 = in1Value;
+        in2 = in2Value;
+    }
+};
 
-char option = '9';
 
-void moveForward(int speed){
-  analogWrite(enA, speed);
-  analogWrite(enB, speed);
+void moveForward(int speed, motor motorX, motor motorY){
+  analogWrite(motorX.en, speed);
+  analogWrite(motorY.en, speed);
 
-  digitalWrite(in1, HIGH);
-  digitalWrite(in2, LOW);
+  digitalWrite(motorX.in1, HIGH);
+  digitalWrite(motorX.in2, LOW);
 
-  digitalWrite(in3, HIGH);
-  digitalWrite(in4, LOW);
+  digitalWrite(motorY.in1, HIGH);
+  digitalWrite(motorY.in2, LOW);
 }
 
-void moveLeft  (int speed){
-  analogWrite(enA, speed);
-  analogWrite(enB, speed);
 
-  digitalWrite(in1, HIGH);
-  digitalWrite(in2, LOW);
+void moveLeft(int speed, motor &motorA, motor &motorB) {
+    analogWrite(motorA.en, speed);
+    analogWrite(motorB.en, speed);
 
-  digitalWrite(in3, LOW);
-  digitalWrite(in4, HIGH);
+    digitalWrite(motorA.in1, HIGH);
+    digitalWrite(motorA.in2, LOW);
+
+    digitalWrite(motorB.in1, LOW);
+    digitalWrite(motorB.in2, HIGH);
 }
 
-void moveRight(int speed){
-  analogWrite(enA, speed);
-  analogWrite(enB, speed);
 
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, HIGH);
+void moveRight(int speed, motor &motorA, motor &motorB) {
+    analogWrite(motorA.en, speed);
+    analogWrite(motorB.en, speed);
 
-  digitalWrite(in3, HIGH);
-  digitalWrite(in4, LOW);
+    digitalWrite(motorA.in1, LOW);
+    digitalWrite(motorA.in2, HIGH);
+
+    digitalWrite(motorB.in1, HIGH);
+    digitalWrite(motorB.in2, LOW);
 }
 
-void moveBackward(int speed){
-  analogWrite(enA, speed);
-  analogWrite(enB, speed);
 
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, HIGH);
+void moveBackward(int speed, motor &motorA, motor &motorB) {
+    analogWrite(motorA.en, speed);
+    analogWrite(motorB.en, speed);
 
-  digitalWrite(in3, LOW);
-  digitalWrite(in4, HIGH);
+    digitalWrite(motorA.in1, LOW);
+    digitalWrite(motorA.in2, HIGH);
+
+    digitalWrite(motorB.in1, LOW);
+    digitalWrite(motorB.in2, HIGH);
 }
 
-void Stop(){
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, LOW);
-  
-  digitalWrite(in3, LOW);
-  digitalWrite(in4, LOW);
+
+void Stop(motor &motorA, motor &motorB) {
+    digitalWrite(motorA.in1, LOW);
+    digitalWrite(motorA.in2, LOW);
+
+    digitalWrite(motorB.in1, LOW);
+    digitalWrite(motorB.in2, LOW);
 }
