@@ -12,18 +12,6 @@
 #include "../lib/motor_control.cpp"
 #include "../lib/sensor_readings.cpp"
 #include "../lib/navigation.cpp"
-#include "../lib/thingProperties.h"
-
-//////////////////// Cloud connection notes ////////////////////
-/*
-The variable being passed to the cloud is:
-    String exploreStatus;
-This variables gives the report of the state/status of the robot in its navigation
-process. The variable is updated and sent when it changes. Change the variable
-'explreStatus' and wait to the next execution of 'loop' to see changes.
-
-To be able to connect to Arduino Cloud, the file 'thingProperties.h' is included.
-*/
 
 //////////////////// Pin configuration ////////////////////
 
@@ -77,19 +65,6 @@ void setup() {
   
     Serial.begin(115200); // Check for the particual baud rate of your microcontroller
     delay(1500);
-
-    // Connect to Arduino IoT Cloud
-    ArduinoCloud.begin(ArduinoIoTPreferredConnection);
-    
-    /*
-      The following function allows you to obtain more information
-      related to the state of network and IoT Cloud connection and errors
-      the higher number the more granular information you’ll get.
-      The default is 0 (only errors).
-      Maximum is 4
-  */
-    // setDebugMessageLevel(2);
-    // ArduinoCloud.printDebugInfo();
 }
 
 
@@ -107,8 +82,6 @@ void setup() {
 */
 
 void loop(int minDistanceFront, bool moveForwardLock) {
-  ArduinoCloud.update(); // Updates the variables and sends them to Arduino Cloud
-
   if(!moveForwardLock){
     int lightSensor = maxIntensityLight(L_sensors, L_readings);
 
