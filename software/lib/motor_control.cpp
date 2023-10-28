@@ -80,10 +80,52 @@ void moveBackward(int speed, motor &motorA, motor &motorB) {
 }
 
 
-void Stop(motor &motorA, motor &motorB) {
+void stop(motor &motorA, motor &motorB) {
     digitalWrite(motorA.in1, LOW);
     digitalWrite(motorA.in2, LOW);
 
     digitalWrite(motorB.in1, LOW);
     digitalWrite(motorB.in2, LOW);
+}
+
+
+///////// Common distance movement and rotations /////////
+
+// The rotation direction is considered looking the robot from above
+void rotate90(char direction, motor &motorA, motor &motorB){
+    // Adjust speed and time for the robots to rotate 90 degrees
+    if(direction == 'L' || direction == 'l'){
+        moveLeft(255, motorA, motorB);
+        delay(500);
+        stop(motorA, motorB);
+    }else if(direction == 'R' || direction == 'r'){
+        moveRight(255, motorA, motorB);
+        delay(500);
+        stop(motorA, motorB);
+    }else{
+        Serial.print("Not a valid rotation direction.");
+    }   
+}
+
+
+void rotate180(motor &motorA, motor &motorB){
+    // Rotations are always done counterclokwise
+    moveLeft(255, motorA, motorB);
+    delay(1000);
+    stop(motorA, motorB); 
+}
+
+
+// Moves an estimate of the length of the robot to the front
+void moveOneRobotLength(motor &motorA, motor &motorB){
+    moveForward(255, motorA, motorB);
+    delay(500);
+    stop(motorA, motorB);
+}
+
+
+void moveHalfRobotLength(motor &motorA, motor &motorB){
+    moveForward(255, motorA, motorB);
+    delay(250);
+    stop(motorA, motorB);
 }

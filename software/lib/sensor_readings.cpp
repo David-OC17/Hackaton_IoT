@@ -20,35 +20,35 @@
 //////////////////// Light resistances ////////////////////
 
 struct lightSensors {
-    int lightSensorPinRight;
-    int lightSensorPinCenter;
-    int lightSensorPinLeft;
+    int right;
+    int center;
+    int left;
 
     // Parameterized constructor
-    lightSensors(int right, int center, int left)
-        : lightSensorPinRight(right), lightSensorPinCenter(center), lightSensorPinLeft(left) {
+    lightSensors(int rightVal, int centerVal, int leftVal)
+        : right(rightVal), center(centerVal), left(leftVal) {
     }
 };
 
 struct lightReadings {
-    int lightReadingRight;
-    int lightReadingCenter;
-    int lightReadingLeft;
+    int right;
+    int center;
+    int left;
 
     // Parameterized constructor
-    lightReadings(int right, int center, int left)
-        : lightReadingRight(right), lightReadingCenter(center), lightReadingLeft(left) {
+    lightReadings(int rightVal, int centerVal, int leftVal)
+        : right(rightVal), center(centerVal), left(leftVal) {
     }
 };
 
 struct lightTolerances {
-    int lightToleranceRight;
-    int lightToleranceCenter;
-    int lightToleranceLeft;
+    int right;
+    int center;
+    int left;
 
     // Parameterized constructor
-    lightTolerances(int right, int center, int left)
-        : lightToleranceRight(right), lightToleranceCenter(center), lightToleranceLeft(left) {
+    lightTolerances(int rightVal, int centerVal, int leftVal)
+        : right(rightVal), center(centerVal), left(leftVal) {
     }
 };
 
@@ -63,15 +63,15 @@ Regresa un valor entre 0 y 2:
 Solamente regresa un valor válido si existe mínimo una resistencia con una lectura
 mayor la mínimo.
 */
-int maxIntensityLight(lightSensors &sensors, lightReadings &readings, lightTolerances &tolerances) {
-    readings.lightReadingRight = analogRead(sensors.lightSensorPinRight);
-    readings.lightReadingCenter = analogRead(sensors.lightSensorPinCenter);
-    readings.lightReadingLeft = analogRead(sensors.lightSensorPinLeft);
+int maxIntensityLight(lightSensors &sensors, lightReadings &readings) {
+    readings.right = analogRead(sensors.right);
+    readings.center = analogRead(sensors.center);
+    readings.left = analogRead(sensors.left);
 
-    if (readings.lightReadingRight > readings.lightReadingCenter && readings.lightReadingRight > readings.lightReadingLeft) {
+    if (readings.right > readings.center && readings.right > readings.left) {
         return 0; // Right has the highest intensity
     }
-    else if (readings.lightReadingCenter > readings.lightReadingRight && readings.lightReadingCenter > readings.lightReadingLeft) {
+    else if (readings.center > readings.right && readings.center > readings.left) {
         return 1; // Center has the highest intensity
     }
     else {
@@ -81,12 +81,22 @@ int maxIntensityLight(lightSensors &sensors, lightReadings &readings, lightToler
 
 //////////////////// Ultrasonic sensors ////////////////////
 struct ultrasonic{
-    long duration;
+    long duration; // Time the sound took to come back
     long distance; // Either in milimeters or inches
     const int pin;
 
     ultrasonic(long durationVal, long distanceVal, int pinVal)
         : duration(durationVal), distance(distanceVal), pin(pinVal){
+    }
+};
+
+struct ultrasonicSensors{
+    ultrasonic left;
+    ultrasonic center;
+    ultrasonic right;
+
+    ultrasonicSensors(ultrasonic &rightSensor, ultrasonic &centerSensor, ultrasonic &leftSensor)
+        : right(rightSensor), center(centerSensor), left(leftSensor) {
     }
 };
 

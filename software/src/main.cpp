@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "../lib/motor_control.cpp"
 #include "../lib/sensor_readings.cpp"
+#include "../lib/navigation.cpp"
 
 //////////////////// Pin configuration ////////////////////
 
@@ -23,8 +24,12 @@ lightSensors L_sensors(2, 3, 4);
 lightReadings L_readings(0, 0, 0);
 lightTolerances L_tolerances(1000, 1000, 1000); 
 
-///////// Ultrasonic sensor configuration /////////
-ultrasonic U_sensor(0, 0, 5);
+///////// Ultrasonic sensors configuration /////////
+ultrasonic U_sensorLeft(0, 0, 5);
+ultrasonic U_sensorFront(0, 0, 6);
+ultrasonic U_sensorRight(0, 0, 7);
+
+ultrasonicSensors(U_sensorLeft, U_sensorFront, U_sensorRight);
 
 
 void setup() {
@@ -48,7 +53,7 @@ void setup() {
     Serial.begin(115200); // Check for the particual baud rate of your microcontroller
 }
 
-void loop() {
+
 /*
 1. Check which of the light sensors is the highest
   1.1 Rotate as needed so the front of the robot faces forward
@@ -62,57 +67,35 @@ void loop() {
       B.2.b If opening not found, rotate 180 degrees and look for new opening
 */
 
-  int lightSensor = maxIntensityLight(lightSensorsObj, lightReadingsObj, lightTolerancesObj);
+void loop() {
+  // Initialize variables for the control and decision making
+  int minDistanceFront = 50; // Milimiters
+  bool moveForwardLock = false;
 
+  int lightSensor = maxIntensityLight(L_sensors, L_readings);
+
+  // Initial correction to look forward - check the time needed for the robot to rotate 90 degrees
   if (lightSensor == 0) {
     // Right sensor has the highest intensity
-    // Rotate so the front of the robot faces forward
-    // Implement the rotation logic here
-  }
-  else if (lightSensor == 1) {
-    // Center sensor has the highest intensity
-    // Rotate so the front of the robot faces forward
-    // Implement the rotation logic here
+    rotate90('L', motorA, motorB);
   }
   else if (lightSensor == 2) {
     // Left sensor has the highest intensity (or they are equal)
-    // Rotate so the front of the robot faces forward
-    // Implement the rotation logic here
-  }
+    rotate90('R', motorA, motorB);
+  }// else the robot is already centered
 
   // Now, you are facing forward. Check the path to the front.
-  int frontDistance = readUltrasonic(ultrasonicObj);
-
-  if (frontDistance > someThreshold) {
-      // Path is clear, move forward
-      moveForward(someSpeed, motorXObj, motorYObj);
+  readUltrasonic(U_sensorFront);
+  while(U_sensorFront.distance > minDistanceFront){
+    // Path is clear, move forward
+      moveForward(255, motorA, motorB);
+      delay(250); // Time to move forward
+      stop(motorA, motorB);
   }
-  else {
-    // Path is not clear, check which side has more clearance
-    int leftDistance = readUltrasonic(ultrasonicLeftObj);
-    int rightDistance = readUltrasonic(ultrasonicRightObj);
+  // The path is no longer clear, rotate to look for new path
+  readUltrasonic(U_sensorLeft);
+  readUltrasonic(U_sensorRight);
+  char rotate = U_sensorRight.distance >= U_sensorLeft.distance ? 'L' : 'R'; // Determine which side to explore first
+  lookForSideOpening(rotate, motorA, motorB);
 
-    if (leftDistance > rightDistance) {
-      // Rotate towards the left side
-      // Implement the rotation logic here
-    }
-    else {
-      // Rotate towards the right side
-      // Implement the rotation logic here
-    }
-
-    // Move towards that side, looking for an opening
-    // Implement the move logic here
-
-    // If opening is found
-    if (openingFound) {
-      // Rotate forward and repeat from step 1
-      // Implement the rotation logic here
-    }
-    // If opening not found
-    else {
-      // Rotate 180 degrees
-      // Implement the rotation logic here
-    }
-  }
 }
