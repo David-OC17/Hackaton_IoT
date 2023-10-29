@@ -15,44 +15,10 @@
  * Proper credit goes to them for their contributions.
  **************************************************************************/
 
-
 #include <Arduino.h>
+#include "../include/sensor_readings.h"
 
 //////////////////// Light resistances ////////////////////
-
-struct lightSensors {
-    int right;
-    int center;
-    int left;
-
-    // Parameterized constructor
-    lightSensors(int rightVal, int centerVal, int leftVal)
-        : right(rightVal), center(centerVal), left(leftVal) {
-    }
-};
-
-struct lightReadings {
-    int right;
-    int center;
-    int left;
-
-    // Parameterized constructor
-    lightReadings(int rightVal, int centerVal, int leftVal)
-        : right(rightVal), center(centerVal), left(leftVal) {
-    }
-};
-
-struct lightTolerances {
-    int right;
-    int center;
-    int left;
-
-    // Parameterized constructor
-    lightTolerances(int rightVal, int centerVal, int leftVal)
-        : right(rightVal), center(centerVal), left(leftVal) {
-    }
-};
-
 /*
 maxIntensityLight
 
@@ -81,25 +47,6 @@ int maxIntensityLight(lightSensors &sensors, lightReadings &readings) {
 }
 
 //////////////////// Ultrasonic sensors ////////////////////
-struct ultrasonic{
-    long duration; // Time the sound took to come back
-    long distance; // Either in milimeters or inches
-    const int pin;
-
-    ultrasonic(long durationVal, long distanceVal, int pinVal)
-        : duration(durationVal), distance(distanceVal), pin(pinVal){
-    }
-};
-
-struct ultrasonicSensors{
-    ultrasonic left;
-    ultrasonic center;
-    ultrasonic right;
-
-    ultrasonicSensors(ultrasonic &rightSensor, ultrasonic &centerSensor, ultrasonic &leftSensor)
-        : right(rightSensor), center(centerSensor), left(leftSensor) {
-    }
-};
 
 long microsecondsToInches(long microseconds) {
   return microseconds / 74 / 2;

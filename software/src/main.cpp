@@ -10,10 +10,10 @@
 
 
 #include <Arduino.h>
-#include "../lib/motor_control.cpp"
-#include "../lib/sensor_readings.cpp"
-#include "../lib/navigation.cpp"
-#include "../lib/blynk_cloud.cpp"
+#include "../include/motor_control.h"
+#include "../include/navigation.h"
+#include "../include/sensor_readings.h"
+#include "../include/blynk_cloud.h"
 
 //////////////////// Pin configuration ////////////////////
 
@@ -71,6 +71,9 @@ void setup() {
 
     // Start the Blynk connection to cloud
     Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+
+    // The pins for the sensors are not configured in setup() because the state
+    // changes from input <--> output during the excecution
 }
 
 

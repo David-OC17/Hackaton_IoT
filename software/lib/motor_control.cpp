@@ -16,19 +16,7 @@
  **************************************************************************/
 
 #include <Arduino.h>
-
-struct motor {
-    int en;
-    int in1;
-    int in2;
-
-    // Constructor for the motor struct
-    motor(int enValue, int in1Value, int in2Value) {
-        en = enValue;
-        in1 = in1Value;
-        in2 = in2Value;
-    }
-};
+#include "../include/motor_control.h"
 
 
 void moveForward(int speed, motor motorX, motor motorY){

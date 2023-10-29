@@ -9,8 +9,11 @@
  * the robot's exploration report.
  **************************************************************************/
 
+#ifndef BLYNK_CLOUD_H
+#define BLYNK_CLOUD_H
+
 // Contains the BLYNK_AUTH_TOKEN, WIFI_NAME and WIFI_PSW to keep them private
-#include "../include/passwords.h"
+#include "passwords.h"
 
 #define BLYNK_TEMPLATE_ID "TMPL2fMCHDDbp"
 #define BLYNK_TEMPLATE_NAME "esp8266IOT"
@@ -30,3 +33,5 @@ char pass[] = WIFI_PSW;
 // Data can be sent at any moment (do not send more than 10 values per second)
 
 // Use the function Blynk.virtualWrite(pinNum, variable) to pass the data to the cloud
+
+#endif //BLYNK_CLOUD_H

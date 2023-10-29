@@ -7,11 +7,8 @@
  * This file includes useful functions for guiding the robot through a maze.
  **************************************************************************/
 
-
 #include <Arduino.h>
-#include "./motor_control.cpp"
-#include "./sensor_readings.cpp"
-#include "../lib/blynk_cloud.cpp"
+#include "../include/navigation.h"
 
 bool exploreLeft(motor &motorA, motor &motorB, ultrasonicSensors &U_sensors, int minDistanceFront){
     rotate90('L', motorA, motorB);
