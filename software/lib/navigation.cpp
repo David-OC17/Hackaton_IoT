@@ -1,16 +1,17 @@
 /**************************************************************************
- * Libreria para navegación
- * Autor: David Ortiz Cota
- * Fecha: 27/10/2023
+ * Navigation Library
+ * Author: David Ortiz Cota
+ * Date: 10/27/2023
  * 
- * Descripcion:
- * Este archivo contiene funciones útiles para la navegación del roboto
- * dentro del laberinto.
+ * Description:
+ * This file includes useful functions for guiding the robot through a maze.
  **************************************************************************/
+
 
 #include <Arduino.h>
 #include "./motor_control.cpp"
 #include "./sensor_readings.cpp"
+#include "../lib/blynk_cloud.cpp"
 
 bool exploreLeft(motor &motorA, motor &motorB, ultrasonicSensors &U_sensors, int minDistanceFront){
     rotate90('L', motorA, motorB);
@@ -100,21 +101,29 @@ bool lookForSideOpening(char firstRotation, motor &motorA, motor &motorB, ultras
             exploreDirections[1] = true;
         }else{
             stop(motorA, motorB);
-            Serial.print("Explored both sided!");
+            //Serial.print("Explored both sides!");
+            Blynk.virtualWrite(V1, "Explored both sides!");
         }
     }
 
     // Check if any of the two explorations was successful
     if (!explorationSuccess[0] && !explorationSuccess[1]){
-        Serial.print("No valid path found!");
+        //Serial.print("No valid path found!");
+        Blynk.virtualWrite(V1, "No valid path found!");
+        
     }else if(explorationSuccess[0]){
-        Serial.print("Left exploration successful! Continuining with path.");
+        //Serial.print("Left exploration successful! Continuining with path.");
+        Blynk.virtualWrite(V1, "Left exploration successful! Continuining with path.");
         return true;
+
     }else if(explorationSuccess[1]){
-        Serial.print("Right exploration successful! Continuining with path.");
+        //Serial.print("Right exploration successful! Continuining with path.");
+        Blynk.virtualWrite(V1, "Right exploration successful! Continuining with path.");
         return true;
+
     }else {
-        Serial.print("Error after exploration.");
+        //Serial.print("Error after exploration.");
+        Blynk.virtualWrite(V1, "Error after exploration.");
         return false;
     }
 }    

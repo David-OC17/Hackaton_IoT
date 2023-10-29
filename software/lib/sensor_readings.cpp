@@ -1,19 +1,20 @@
 /**************************************************************************
- * Libreria para lectura de sensores
- * Autor: David Ortiz Cota
- * Fecha: 26/10/2023
+ * Sensor Reading Library
+ * Author: David Ortiz Cota
+ * Date: 10/26/2023
  * 
- * Descripcion:
- * Este archivo contiene funciones útiles para la lectura de dos tipos de 
- * sensores, fotoresistencias y sensores ultrasónicos.
+ * Description:
+ * This file contains useful functions for reading two types of sensors:
+ * photoresistors and ultrasonic sensors.
  * 
  * Credits:
- * Some of the code functions in the library where taken from from:
+ * Some of the code functions in the library were inspired by:
  * https://github.com/ParzivalStark/TallerIRS by ParzivalStark
  * and
  * https://www.instructables.com/Arduino-Flashlight-Following-Robot/ by joesinstructables
- * Due credit to them for their work.
+ * Proper credit goes to them for their contributions.
  **************************************************************************/
+
 
 #include <Arduino.h>
 

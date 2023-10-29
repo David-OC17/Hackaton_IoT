@@ -1,19 +1,18 @@
 /**************************************************************************
- * Libreria para control de motores
- * Autor: David Ortiz Cota
- * Fecha: 27/10/2023
+ * Motor Control Library
+ * Author: David Ortiz Cota
+ * Date: 10/27/2023
  * 
- * Descripcion:
- * Este archivo contiene funciones útiles para el control de los dos motores
- * del robot. Se utiliza un struct para cada motor, y funciones para
- * traslación y roatación sencilla del robot.
+ * Description:
+ * This file contains useful functions for controlling the two motors of the robot. 
+ * It utilizes a struct for each motor and provides functions for simple robot 
+ * translation and rotation.
  * 
  * Credits:
- * Some of the code functions in the library where taken from from:
- * https://github.com/ParzivalStark/TallerIRS by ParzivalStark
- * and
- * https://www.instructables.com/Arduino-Flashlight-Following-Robot/ by joesinstructables
- * Due credit to them for their work.
+ * Some of the code functions in this library were adapted from the following sources:
+ * - https://github.com/ParzivalStark/TallerIRS by ParzivalStark
+ * - https://www.instructables.com/Arduino-Flashlight-Following-Robot/ by joesinstructables
+ * Proper credit goes to them for their contributions.
  **************************************************************************/
 
 #include <Arduino.h>

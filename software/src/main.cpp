@@ -1,17 +1,19 @@
 /**************************************************************************
- * Main script
- * Autor: David Ortiz Cota
- * Fecha: 28/10/2023
+ * Main Script
+ * Author: David Ortiz Cota
+ * Date: 10/28/2023
  * 
- * Descripcion:
- * Este archivo contiene la implementación centralizada para la navegación
- * del robot en el laberinto. 
+ * Description:
+ * This file contains the central implementation for guiding the robot
+ * through the maze.
  **************************************************************************/
+
 
 #include <Arduino.h>
 #include "../lib/motor_control.cpp"
 #include "../lib/sensor_readings.cpp"
 #include "../lib/navigation.cpp"
+#include "../lib/blynk_cloud.cpp"
 
 //////////////////// Pin configuration ////////////////////
 
@@ -45,6 +47,7 @@ ultrasonicSensors U_sensors(U_sensorLeft, U_sensorFront, U_sensorRight);
 int minDistanceFront = 50; // Milimiters
 bool moveForwardLock = false;
 
+
 void setup() {
     // Set pin modes for motor A
     pinMode(motorA.en, OUTPUT);
@@ -65,6 +68,9 @@ void setup() {
   
     Serial.begin(115200); // Check for the particual baud rate of your microcontroller
     delay(1500);
+
+    // Start the Blynk connection to cloud
+    Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
 }
 
 
@@ -82,6 +88,9 @@ void setup() {
 */
 
 void loop(int minDistanceFront, bool moveForwardLock) {
+  Blynk.run();
+  Blynk.virtualWrite(V1, "New exploration step!");
+
   if(!moveForwardLock){
     int lightSensor = maxIntensityLight(L_sensors, L_readings);
 
@@ -113,6 +122,7 @@ void loop(int minDistanceFront, bool moveForwardLock) {
     // We take the lock and use it to determine if we should stop the robot completelly or to continue with the next loop iteration
   }else{ // Do not move further if no path was found
     stop(motorA, motorB);
-    Serial.print("Error after exploration, no path found.");
+    //Serial.print("Error after exploration, no path found.");
+    Blynk.virtualWrite(V1, "Error after exploration, no path found.");
   }
 }
