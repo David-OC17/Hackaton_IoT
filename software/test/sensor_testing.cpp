@@ -9,6 +9,7 @@ lightReadings L_readings(0, 0, 0);
 lightTolerances L_tolerances(1000, 1000, 1000); 
 
 ///////// Ultrasonic sensors configuration /////////
+// Set all the trigger pins equal
 ultrasonic U_sensorLeft(0, 0, 5);
 ultrasonic U_sensorFront(0, 0, 6);
 ultrasonic U_sensorRight(0, 0, 7);

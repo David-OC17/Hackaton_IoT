@@ -73,6 +73,7 @@ struct ultrasonic{
     long duration; // Time the sound took to come back
     long distance; // Either in milimeters or inches
     const int pin;
+    // const int trigger; // We may not use a trigger pin by switching the state of the pin input <--> output
 
     ultrasonic(long durationVal, long distanceVal, int pinVal)
         : duration(durationVal), distance(distanceVal), pin(pinVal){

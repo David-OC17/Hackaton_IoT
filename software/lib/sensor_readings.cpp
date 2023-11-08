@@ -58,6 +58,7 @@ long microsecondsToMillimeters(long microseconds) {
 
 // Turn the sensor on, get a reading, convert time into distance
 void readUltrasonic(ultrasonic &U_sensor){
+    // Use 'pin' as output to trigger the activation of the sensor, then switch to input to get the reading
 	pinMode(U_sensor.pin, OUTPUT);
 	digitalWrite(U_sensor.pin, LOW);
 	delayMicroseconds(2);
