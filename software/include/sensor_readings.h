@@ -20,6 +20,16 @@
 
 #include <Arduino.h>
 
+//////////////////// Infrared photodiode ////////////////////
+
+struct infraredPhotodiode{
+    int pin; // Analog pin number
+    int value; // Value of the reading
+};
+
+// Compare the readings of both the diodes, return which has the heighest reading
+char maxIntensityInfraredPhotoDiode(infraredPhotodiode diodeA, infraredPhotodiode diodeB);
+
 //////////////////// Light resistances ////////////////////
 
 struct lightSensors {

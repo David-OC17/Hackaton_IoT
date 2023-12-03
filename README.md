@@ -1,4 +1,7 @@
 # IoT Hackathon
+
+## PLEASE NOTE THAT IS PROJECT IS ONGOING AND RECEIVING MODIFICATIONS
+
 # Repository for Obstacle Avoidance and Fire Detection Robot
 
 This GitHub repository contains the code and resources related to an exciting ESP32-based robot project designed to navigate a maze while searching for an infrared light source and avoiding obstacles. The project focuses on programming and controlling the robot using infrared and ultrasonic sensors to achieve its objective.

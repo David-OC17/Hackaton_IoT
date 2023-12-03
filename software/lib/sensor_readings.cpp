@@ -18,6 +18,23 @@
 #include <Arduino.h>
 #include "../include/sensor_readings.h"
 
+//////////////////// Infrared photodiode ////////////////////
+
+// Compare the readings of both the diodes, return which has the heighest reading
+// The diodes should be placed at a 45 degree angle from the center and front of the robot
+// Return 1: Left diode has 
+char maxIntensityInfraredPhotoDiode(infraredPhotodiode diodeA, infraredPhotodiode diodeB){
+    // Read both values
+    diodeA.value = analogRead(diodeA.pin);
+    diodeB.value = analogRead(diodeB.pin);
+
+    if(diodeA.value >= diodeB.value){
+        return 'L';
+    }else{
+        return 'R';
+    }
+}
+
 //////////////////// Light resistances ////////////////////
 /*
 maxIntensityLight

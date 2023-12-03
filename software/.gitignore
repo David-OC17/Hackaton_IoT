@@ -5,3 +5,4 @@
 .vscode/ipch
 KEYS_IDS.txt
 /include/passwords.h
+/test/passwords.h

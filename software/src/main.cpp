@@ -71,9 +71,6 @@ void setup() {
 
     // Start the Blynk connection to cloud
     Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
-
-    // The pins for the sensors are not configured in setup() because the state
-    // changes from input <--> output during the excecution
 }
 
 
